@@ -95,8 +95,8 @@
   /* livro + palestrante */
   .livro{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
   .foto{position:relative;max-width:400px;margin-inline:auto;width:calc(100% - 28px)}
-  .foto .moldura{border-radius:200px 200px 28px 28px;overflow:hidden;border:6px solid #fffaf4;box-shadow:0 30px 60px -25px rgba(110,59,46,.55);aspect-ratio:4/4.6;background:var(--papel-escuro)}
-  .foto .moldura img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+  .foto .moldura{border-radius:200px 200px 28px 28px;overflow:hidden;border:6px solid #fffaf4;box-shadow:0 30px 60px -25px rgba(110,59,46,.55);aspect-ratio:400/495;background:var(--papel-escuro)}
+  .foto .moldura img{width:100%;height:100%;object-fit:cover;object-position:center top}
   .foto::before{content:"";position:absolute;inset:-14px;border-radius:214px 214px 40px 40px;border:2px solid var(--pessego);z-index:-1;transform:translate(14px,14px)}
   .nome-badge{position:absolute;left:50%;bottom:-22px;transform:translateX(-50%);white-space:nowrap;padding:6px 30px 10px;border-radius:999px;
     background:var(--laranja-forte);color:#3b1a10;font:400 34px/1 "Great Vibes",cursive;border:2px solid #fff3e6;box-shadow:0 0 0 2px var(--laranja-forte),0 12px 24px -10px rgba(224,101,42,.7)}
