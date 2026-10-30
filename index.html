@@ -135,7 +135,7 @@
   .campo > label,.rotulo{display:block;font-weight:800;font-size:15px;margin-bottom:8px}
   .entrada{position:relative}
   .entrada svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--pessego);pointer-events:none}
-  input[type=text],input[type=tel]{width:100%;font:600 17px "Nunito",sans-serif;color:var(--marrom);padding:16px 16px 16px 48px;border-radius:16px;
+  input[type=text]{width:100%;font:600 17px "Nunito",sans-serif;color:var(--marrom);padding:16px 16px 16px 48px;border-radius:16px;
     border:2px solid var(--linha);background:#fff;outline:none;transition:border-color .2s, box-shadow .2s}
   input::placeholder{color:#c5a594;font-weight:400}
   input:focus{border-color:var(--laranja);box-shadow:0 0 0 5px rgba(238,138,76,.15)}
@@ -156,7 +156,7 @@
   .contador{display:flex;align-items:center;gap:6px}
   .contador button{width:46px;height:46px;border-radius:50%;border:2px solid var(--laranja);background:#fff;color:var(--laranja-forte);font-size:24px;font-weight:800;cursor:pointer;line-height:1;transition:background .2s}
   .contador button:hover{background:#fff1e4}
-  .contador output{min-width:48px;text-align:center;font:600 34px/1 "Cormorant Garamond",serif}
+  .contador output{min-width:48px;text-align:center;font:800 28px/1 "Nunito",sans-serif}
   .card .cta{width:100%;justify-content:center;margin-top:28px}
   .erro{color:#b3261e;font-size:14px;font-weight:700;margin-top:12px;text-align:center;min-height:1.2em}
   .ok{text-align:center;padding:10px 0}
@@ -325,15 +325,6 @@
             </div>
 
             <div class="campo">
-              <label for="tel">Telefone / WhatsApp</label>
-              <div class="entrada">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
-                <input type="tel" id="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000" maxlength="16" required>
-              </div>
-              <div class="dica">Usaremos para avisar sobre o sorteio.</div>
-            </div>
-
-            <div class="campo">
               <span class="rotulo">Você tem filhos?</span>
               <div class="opcoes" role="radiogroup" aria-label="Você tem filhos?">
                 <label><input type="radio" name="filhos" value="Sim"><span class="bola"></span>Sim</label>
@@ -436,14 +427,6 @@
       .catch(function(){ $('vagasTxt').textContent = 'Vagas limitadas a ' + LIMITE + ' participantes'; });
   }
 
-  /* máscara de telefone */
-  $('tel').addEventListener('input', function(){
-    var d = this.value.replace(/\D/g, '').slice(0, 11), f = d;
-    if (d.length > 2) f = '(' + d.slice(0,2) + ') ' + d.slice(2);
-    if (d.length > 7) f = '(' + d.slice(0,2) + ') ' + d.slice(2, d.length - 4) + '-' + d.slice(-4);
-    this.value = f;
-  });
-
   /* filhos */
   document.querySelectorAll('input[name=filhos]').forEach(function(r){
     r.addEventListener('change', function(){
@@ -461,14 +444,12 @@
     e.preventDefault();
     if (!API_URL) return;
     var nome = $('nome').value.trim().replace(/\s+/g,' ');
-    var tel = $('tel').value.trim();
     var filhosEl = document.querySelector('input[name=filhos]:checked');
     $('erro').textContent = '';
     if (nome.split(' ').length < 2) { $('erro').textContent = 'Informe seu nome completo (nome e sobrenome).'; $('nome').focus(); return; }
-    if (tel.replace(/\D/g,'').length < 10) { $('erro').textContent = 'Informe um telefone com DDD.'; $('tel').focus(); return; }
     if (!filhosEl) { $('erro').textContent = 'Responda se você tem filhos.'; return; }
 
-    var dados = { nome: nome, telefone: tel, temFilhos: filhosEl.value, qtdFilhos: filhosEl.value === 'Sim' ? qtd : 0 };
+    var dados = { nome: nome, temFilhos: filhosEl.value, qtdFilhos: filhosEl.value === 'Sim' ? qtd : 0 };
     var btn = $('enviar'), txtBtn = btn.innerHTML;
     btn.disabled = true; btn.textContent = 'Enviando…';
     var liberar = function(){ btn.disabled = false; btn.innerHTML = txtBtn; };
@@ -487,7 +468,7 @@
           '<div class="grande">Inscrição confirmada!</div>' +
           '<p>Obrigada, <b id="pn"></b>. Te esperamos com muito carinho.</p>' +
           '<div class="numero">Sua inscrição nº<b>' + Number(r.numero) + '</b></div>' +
-          '<p class="dica">Fique de olho no seu WhatsApp para o resultado do sorteio.</p></div>';
+          '<p class="dica">Guarde este número. Nos vemos no encontro!</p></div>';
         $('pn').textContent = nome.split(' ')[0];
         mostrarVagas(Number(r.numero));
       })
