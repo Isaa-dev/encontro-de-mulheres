@@ -453,6 +453,11 @@
     e.preventDefault();
     if (!API_URL) return;
     var nome = $('nome').value.trim().replace(/\s+/g,' ');
+    var minusc = ['da','de','do','das','dos','e','di','du','van','von','der','den'];
+    nome = nome.toLowerCase().split(' ').map(function(p, i){
+      if (i > 0 && minusc.indexOf(p) !== -1) return p;
+      return p.split('-').map(function(s){ return s.charAt(0).toUpperCase() + s.slice(1); }).join('-');
+    }).join(' ');
     var filhosEl = document.querySelector('input[name=filhos]:checked');
     $('erro').textContent = '';
     if (nome.split(' ').length < 2) { $('erro').textContent = 'Informe seu nome completo (nome e sobrenome).'; $('nome').focus(); return; }
